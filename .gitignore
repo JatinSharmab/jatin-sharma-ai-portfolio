@@ -1,8 +1,30 @@
-node_modules
-dist
-.env
-.env.local
-.env.*.local
-*.log
-.DS_Store
+# Dependencies
+node_modules/
 
+# Production builds
+dist/
+build/
+
+# Local environment and deployment state
+.env
+.env.*
+.vercel/
+
+# Package-manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Manrope Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-sans: "Manrope Variable", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --color-ink-950: #06060b;
+  --color-ink-900: #0b0c14;
+  --color-ink-850: #111221;
+  --color-ink-800: #17182a;
+  --color-mist-50: #f7f8ff;
+  --color-mist-200: #d9dcef;
+  --color-mist-400: #969bb8;
+  --color-violet-electric: #8b5cf6;
+  --color-cyan-electric: #22d3ee;
+  --color-magenta-soft: #d946ef;
+
+  --radius-card: 1.5rem;
+  --radius-control: 0.875rem;
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.34);
+  --shadow-glow: 0 0 48px rgb(139 92 246 / 0.18);
+}
+
+:root {
+  --color-bg: #06060b;
+  --color-bg-elevated: #0b0c14;
+  --color-surface: #111221;
+  --color-surface-strong: #17182a;
+  --color-text: #f7f8ff;
+  --color-text-soft: #d9dcef;
+  --color-text-muted: #969bb8;
+  --color-border: rgb(164 171 214 / 0.16);
+  --color-border-strong: rgb(164 171 214 / 0.28);
+  --color-violet: #8b5cf6;
+  --color-cyan: #22d3ee;
+  --color-magenta: #d946ef;
+
+  --gradient-brand: linear-gradient(120deg, #b8a1ff 0%, #8b5cf6 38%, #22d3ee 100%);
+  --gradient-surface: linear-gradient(145deg, rgb(20 21 39 / 0.88), rgb(9 10 18 / 0.72));
+  --gradient-border: linear-gradient(120deg, rgb(139 92 246 / 0.55), rgb(34 211 238 / 0.2));
+  --gradient-ambient:
+    radial-gradient(circle at 14% 9%, rgb(139 92 246 / 0.15), transparent 28rem),
+    radial-gradient(circle at 88% 22%, rgb(34 211 238 / 0.09), transparent 24rem),
+    radial-gradient(circle at 52% 82%, rgb(217 70 239 / 0.06), transparent 30rem);
+
+  --font-body: "Manrope Variable", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-technical: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --section-space: clamp(5rem, 10vw, 9rem);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-pill: 999px;
+
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.34);
+  --shadow-lifted: 0 28px 80px rgb(0 0 0 / 0.46);
+  --shadow-focus: 0 0 0 4px rgb(34 211 238 / 0.2);
+  --shadow-violet: 0 0 48px rgb(139 92 246 / 0.18);
+
+  --glass-background: rgb(11 12 20 / 0.72);
+  --glass-border: 1px solid rgb(164 171 214 / 0.16);
+  --glass-blur: 18px;
+
+  --container-width: 76rem;
+  --container-gutter: clamp(1rem, 4vw, 2rem);
+  --content-width: 46rem;
+
+  --duration-fast: 200ms;
+  --duration-base: 360ms;
+  --duration-slow: 560ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+}
