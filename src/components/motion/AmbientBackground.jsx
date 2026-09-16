@@ -15,7 +15,7 @@ function AmbientBackground() {
         transition={{ duration: 18, ease: 'easeInOut', repeat: Infinity }}
       />
       <m.span
-        className="ambient-motion__light ambient-motion__light--cyan"
+        className="ambient-motion__light ambient-motion__light--lime"
         animate={
           reduceMotion
             ? undefined

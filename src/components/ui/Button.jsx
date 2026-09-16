@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import usePointerFine from '../../hooks/usePointerFine.js'
 
@@ -14,13 +15,18 @@ const sizes = {
 
 function Button({
   href,
+  to,
   variant = 'primary',
   size = 'medium',
   className = '',
   children,
   disabled = false,
+  target,
+  rel,
+  download,
   ...props
 }) {
+  const targetUrl = to || href
   const pointerFine = usePointerFine()
   const reduceMotion = useReducedMotion()
   const x = useMotionValue(0)
@@ -53,20 +59,39 @@ function Button({
 
   const { onPointerMove, onPointerLeave, style, ...elementProps } = props
 
-  if (href && !disabled) {
-    const external = href.startsWith('http')
+  if (targetUrl && !disabled) {
+    const isExternal =
+      targetUrl.startsWith('http') ||
+      targetUrl.startsWith('mailto:') ||
+      targetUrl.endsWith('.pdf') ||
+      targetUrl.startsWith('#') ||
+      download
+
+    if (isExternal) {
+      const computedTarget = target ?? (targetUrl.startsWith('http') || targetUrl.endsWith('.pdf') ? '_blank' : undefined)
+      const computedRel = rel ?? (computedTarget === '_blank' ? 'noopener noreferrer' : undefined)
+
+      return (
+        <m.a
+          className={classes}
+          href={targetUrl}
+          target={computedTarget}
+          rel={computedRel}
+          download={download}
+          {...elementProps}
+          {...motionProps}
+        >
+          {children}
+        </m.a>
+      )
+    }
 
     return (
-      <m.a
-        className={classes}
-        href={href}
-        target={external ? '_blank' : undefined}
-        rel={external ? 'noopener noreferrer' : undefined}
-        {...elementProps}
-        {...motionProps}
-      >
-        {children}
-      </m.a>
+      <m.div className="inline-block" {...motionProps}>
+        <Link className={classes} to={targetUrl} {...elementProps}>
+          {children}
+        </Link>
+      </m.div>
     )
   }
 

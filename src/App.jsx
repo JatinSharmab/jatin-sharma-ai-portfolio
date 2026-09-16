@@ -1,53 +1,69 @@
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import AppShell from './components/layout/AppShell.jsx'
-import About from './components/sections/About.jsx'
-import Contact from './components/sections/Contact.jsx'
-import Education from './components/sections/Education.jsx'
-import Experience from './components/sections/Experience.jsx'
-import Hero from './components/sections/Hero.jsx'
-import Highlights from './components/sections/Highlights.jsx'
-import Projects from './components/sections/Projects.jsx'
-import Skills from './components/sections/Skills.jsx'
+import HomePage from './pages/HomePage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import ProjectsIndexPage from './pages/ProjectsIndexPage.jsx'
+import ProjectCaseStudyPage from './pages/ProjectCaseStudyPage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
 import { portfolioData } from './data/portfolioData.js'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
 
 function App() {
   const {
     about,
-    additionalProjects,
-    additionalProjectsStatus,
     achievements,
     contact,
     education,
     experience,
-    featuredProject,
-    hero,
-    highlights,
-    personal,
-    sectionIntros,
+    projects,
     skillGroups,
     socialLinks,
   } = portfolioData
 
   return (
-    <AppShell data={portfolioData}>
-      <Hero hero={hero} personal={personal} socialLinks={socialLinks} />
-      <Highlights highlights={highlights} />
-
-      <About about={about} intro={sectionIntros.about} />
-      <Experience experience={experience} intro={sectionIntros.experience} />
-      <Projects
-        additionalProjects={additionalProjects}
-        additionalProjectsStatus={additionalProjectsStatus}
-        featuredProject={featuredProject}
-        intro={sectionIntros.projects}
-      />
-      <Skills skillGroups={skillGroups} intro={sectionIntros.skills} />
-      <Education
-        achievements={achievements}
-        education={education}
-        intro={sectionIntros.education}
-      />
-      <Contact contact={contact} intro={sectionIntros.contact} socialLinks={socialLinks} />
-    </AppShell>
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppShell data={portfolioData}>
+        <Routes>
+          <Route path="/" element={<HomePage data={portfolioData} />} />
+          <Route
+            path="/about"
+            element={
+              <AboutPage
+                about={about}
+                experience={experience}
+                skillGroups={skillGroups}
+                education={education}
+                achievements={achievements}
+              />
+            }
+          />
+          <Route
+            path="/projects"
+            element={<ProjectsIndexPage projects={projects} />}
+          />
+          <Route
+            path="/projects/:slug"
+            element={<ProjectCaseStudyPage projects={projects} />}
+          />
+          <Route
+            path="/contact"
+            element={<ContactPage contact={contact} socialLinks={socialLinks} />}
+          />
+          <Route path="*" element={<HomePage data={portfolioData} />} />
+        </Routes>
+      </AppShell>
+    </BrowserRouter>
   )
 }
 

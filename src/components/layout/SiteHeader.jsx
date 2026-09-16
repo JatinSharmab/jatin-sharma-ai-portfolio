@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { FaBars, FaXmark } from 'react-icons/fa6'
-import useActiveSection from '../../hooks/useActiveSection.js'
 import Button from '../ui/Button.jsx'
 import PageContainer from './PageContainer.jsx'
 
@@ -10,8 +10,12 @@ function SiteHeader({ personal, navigation }) {
   const menuRef = useRef(null)
   const menuButtonRef = useRef(null)
   const firstMobileLinkRef = useRef(null)
-  const activeSection = useActiveSection(navigation)
+  const location = useLocation()
   const reduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
 
   useEffect(() => {
     if (!menuOpen) return undefined
@@ -25,7 +29,7 @@ function SiteHeader({ personal, navigation }) {
 
       if (event.key !== 'Tab') return
 
-      const focusableElements = menuRef.current?.querySelectorAll('a[href]')
+      const focusableElements = menuRef.current?.querySelectorAll('a[href], button')
       if (!focusableElements?.length) return
 
       const firstElement = focusableElements[0]
@@ -47,9 +51,13 @@ function SiteHeader({ personal, navigation }) {
     const desktopQuery = window.matchMedia('(min-width: 64rem)')
     document.addEventListener('keydown', handleKeyDown)
     desktopQuery.addEventListener('change', handleDesktopChange)
-    firstMobileLinkRef.current?.focus()
+
+    const timer = setTimeout(() => {
+      firstMobileLinkRef.current?.focus()
+    }, 50)
 
     return () => {
+      clearTimeout(timer)
       document.removeEventListener('keydown', handleKeyDown)
       desktopQuery.removeEventListener('change', handleDesktopChange)
     }
@@ -60,41 +68,48 @@ function SiteHeader({ personal, navigation }) {
   return (
     <header className="site-header">
       <PageContainer className="flex min-h-18 items-center justify-between gap-4">
-        <a
-          href="#home"
+        <Link
+          to="/"
           className="wordmark group"
           aria-label={`${personal.name}, return to home`}
           onClick={closeMenu}
         >
           <span className="wordmark__mark" aria-hidden="true">
-            {personal.initials}
+            {personal.initials}.
           </span>
           <span className="hidden font-semibold tracking-[-0.02em] text-mist-50 sm:inline">
             {personal.name}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden lg:block" aria-label="Primary navigation">
           <ul className="flex items-center gap-1">
-            {navigation.map((item) => (
-              <li key={item.href}>
-                <a
-                  className={`nav-link ${activeSection === item.href.slice(1) ? 'nav-link--active' : ''}`}
-                  href={item.href}
-                  aria-current={activeSection === item.href.slice(1) ? 'location' : undefined}
-                >
-                  {item.label}
-                  {activeSection === item.href.slice(1) ? (
-                    <m.span
-                      className="nav-link__active-indicator"
-                      layoutId="primary-navigation-indicator"
-                      transition={{ duration: reduceMotion ? 0 : 0.28 }}
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                </a>
-              </li>
-            ))}
+            {navigation.map((item) => {
+              const isActive =
+                item.href === '/'
+                  ? location.pathname === '/'
+                  : location.pathname.startsWith(item.href)
+
+              return (
+                <li key={item.href}>
+                  <NavLink
+                    to={item.href}
+                    className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {item.label}
+                    {isActive ? (
+                      <m.span
+                        className="nav-link__active-indicator"
+                        layoutId="primary-navigation-indicator"
+                        transition={{ duration: reduceMotion ? 0 : 0.28 }}
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                  </NavLink>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
@@ -104,7 +119,8 @@ function SiteHeader({ personal, navigation }) {
             variant="secondary"
             size="small"
             className="header-resume"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Resume
           </Button>
@@ -114,7 +130,7 @@ function SiteHeader({ personal, navigation }) {
             type="button"
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
-            aria-controls={menuOpen ? 'mobile-navigation' : undefined}
+            aria-controls="mobile-navigation"
             aria-haspopup="true"
             onClick={() => setMenuOpen((open) => !open)}
           >
@@ -125,41 +141,59 @@ function SiteHeader({ personal, navigation }) {
 
       <AnimatePresence initial={false}>
         {menuOpen ? (
-        <m.div
-          ref={menuRef}
-          className="mobile-menu lg:hidden"
-          initial={reduceMotion ? false : { opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-          transition={{ duration: reduceMotion ? 0 : 0.22 }}
-        >
-          <PageContainer>
-            <nav id="mobile-navigation" aria-label="Mobile navigation">
-              <ul className="mobile-menu__list">
-                {navigation.map((item, index) => {
-                  const active = activeSection === item.href.slice(1)
+          <m.div
+            ref={menuRef}
+            id="mobile-navigation"
+            className="mobile-menu lg:hidden"
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22 }}
+          >
+            <PageContainer>
+              <nav aria-label="Mobile navigation">
+                <ul className="mobile-menu__list">
+                  {navigation.map((item, index) => {
+                    const isActive =
+                      item.href === '/'
+                        ? location.pathname === '/'
+                        : location.pathname.startsWith(item.href)
 
-                  return (
-                    <li key={item.href}>
-                      <a
-                        ref={index === 0 ? firstMobileLinkRef : undefined}
-                        className={`mobile-menu__link ${active ? 'mobile-menu__link--active' : ''}`}
-                        href={item.href}
-                        aria-current={active ? 'location' : undefined}
-                        onClick={closeMenu}
-                      >
-                        <span className="technical-label" aria-hidden="true">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        {item.label}
-                      </a>
-                    </li>
-                  )
-                })}
-              </ul>
-            </nav>
-          </PageContainer>
-        </m.div>
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          ref={index === 0 ? firstMobileLinkRef : undefined}
+                          to={item.href}
+                          className={`mobile-menu__link ${isActive ? 'mobile-menu__link--active' : ''}`}
+                          aria-current={isActive ? 'page' : undefined}
+                          onClick={closeMenu}
+                        >
+                          <span className="technical-label" aria-hidden="true">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                          {item.label}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                  <li>
+                    <a
+                      href={personal.resumePath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mobile-menu__link mobile-menu__resume-link"
+                      onClick={closeMenu}
+                    >
+                      <span className="technical-label" aria-hidden="true">
+                        05
+                      </span>
+                      Resume (PDF) ↗
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </PageContainer>
+          </m.div>
         ) : null}
       </AnimatePresence>
     </header>

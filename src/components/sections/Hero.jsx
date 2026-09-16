@@ -1,5 +1,5 @@
 import { m, useReducedMotion } from 'framer-motion'
-import { FaArrowRight, FaDownload } from 'react-icons/fa6'
+import { FaArrowRight, FaDownload, FaEnvelope } from 'react-icons/fa6'
 import PageContainer from '../layout/PageContainer.jsx'
 import Section from '../layout/Section.jsx'
 import Button from '../ui/Button.jsx'
@@ -36,27 +36,32 @@ function Hero({ hero, personal, socialLinks }) {
             </m.div>
 
             <m.p className="hero-eyebrow technical-label mt-7" variants={itemVariants}>
-              {hero.eyebrow}
+              {hero.greeting} {personal.name}
             </m.p>
-            <m.h1 id="home-title" className="display-title mt-5" variants={itemVariants}>
+            <m.h1 id="home-title" className="display-title mt-3" variants={itemVariants}>
               {hero.headline}
             </m.h1>
             <m.p className="hero-accent" variants={itemVariants}>
-              <GradientText>{hero.accent}</GradientText>
+              <GradientText>{hero.valueProposition}</GradientText>
             </m.p>
             <m.p className="hero-description" variants={itemVariants}>
               {hero.description}
             </m.p>
 
             <m.div className="hero-actions" variants={itemVariants}>
-              <Button href="#projects">
-                View my work <FaArrowRight aria-hidden="true" />
+              <Button href="/projects">
+                View Projects <FaArrowRight aria-hidden="true" />
               </Button>
-              <Button href={personal.resumePath} variant="secondary" download>
-                Download resume <FaDownload aria-hidden="true" />
+              <Button href="/contact" variant="ghost">
+                Contact Me <FaEnvelope aria-hidden="true" />
               </Button>
-              <Button href="#contact" variant="ghost">
-                Contact me
+              <Button
+                href={personal.resumePath}
+                variant="secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Resume <FaDownload aria-hidden="true" />
               </Button>
             </m.div>
 

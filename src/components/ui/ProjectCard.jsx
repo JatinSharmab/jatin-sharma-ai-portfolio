@@ -1,92 +1,104 @@
 import { m, useReducedMotion } from 'framer-motion'
-import { FaArrowUpRightFromSquare, FaGithub } from 'react-icons/fa6'
+import { FaArrowRight, FaArrowUpRightFromSquare, FaGithub, FaLayerGroup } from 'react-icons/fa6'
 import Button from './Button.jsx'
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, priority = false }) {
   const reduceMotion = useReducedMotion()
   const {
-    approach,
-    demoUrl,
-    featured = false,
-    githubUrl,
-    image,
-    problem,
-    solution,
-    stack = [],
-    summary,
+    id,
+    slug,
+    number,
+    category,
     title,
+    summary,
+    tags = [],
+    githubUrl,
+    demoUrl,
+    statusLabel,
   } = project
+
+  const caseStudyUrl = `/projects/${slug || id}`
 
   return (
     <m.article
-      className={`project-card ${featured ? 'project-card--featured' : ''}`}
-      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+      className="project-card surface-panel"
+      initial={reduceMotion ? false : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
-      whileHover={reduceMotion ? undefined : { y: -5, scale: 1.01 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.36 }}
+      whileHover={reduceMotion ? undefined : { y: -4 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.38 }}
     >
       <div className="project-card__visual">
-        {image ? (
-          <img
-            src={image.src ?? image}
-            alt={image.alt ?? ''}
-            width={image.width}
-            height={image.height}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <span aria-hidden="true">{title.slice(0, 2).toUpperCase()}</span>
-        )}
+        <div className="project-card__visual-circuit" aria-hidden="true">
+          <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-40">
+            <path d="M 20 80 H 120 L 160 40 H 260 L 300 120 H 380" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
+            <circle cx="120" cy="80" r="4" fill="currentColor" />
+            <circle cx="160" cy="40" r="4" fill="currentColor" />
+            <circle cx="260" cy="40" r="4" fill="currentColor" />
+            <circle cx="300" cy="120" r="4" fill="currentColor" />
+          </svg>
+        </div>
+        <div className="project-card__visual-header">
+          <span className="project-card__number">{number}</span>
+          {statusLabel ? (
+            <span className="project-card__status-chip">{statusLabel}</span>
+          ) : null}
+        </div>
+        <div className="project-card__visual-icon" aria-hidden="true">
+          <FaLayerGroup />
+        </div>
       </div>
 
       <div className="project-card__body">
-        <p className="technical-label">{featured ? 'Featured project' : 'Selected project'}</p>
-        <h3>{title}</h3>
-        {summary ? <p className="project-card__summary">{summary}</p> : null}
+        <div className="project-card__meta">
+          <p className="technical-label">{category}</p>
+        </div>
 
-        {problem || solution || approach ? (
-          <dl className="project-card__details">
-            {problem ? (
-              <div>
-                <dt>Problem</dt>
-                <dd>{problem}</dd>
-              </div>
-            ) : null}
-            {solution || approach ? (
-              <div>
-                <dt>Solution</dt>
-                <dd>{solution ?? approach}</dd>
-              </div>
-            ) : null}
-          </dl>
-        ) : null}
+        <h3 className="project-card__title">
+          <Button href={caseStudyUrl} variant="ghost" className="!p-0 !text-left !font-semibold !text-lg sm:!text-xl hover:!text-lime">
+            {title}
+          </Button>
+        </h3>
 
-        {stack.length ? (
+        <p className="project-card__summary">{summary}</p>
+
+        {tags.length ? (
           <ul className="project-card__stack" aria-label={`${title} technology stack`}>
-            {stack.map((technology) => (
+            {tags.slice(0, 8).map((technology) => (
               <li key={technology}>{technology}</li>
             ))}
           </ul>
         ) : null}
 
-        {githubUrl || demoUrl ? (
-          <div className="project-card__actions">
-            {githubUrl ? (
-              <Button href={githubUrl} size="small" variant="secondary">
-                <FaGithub aria-hidden="true" />
-                GitHub
-              </Button>
-            ) : null}
-            {demoUrl ? (
-              <Button href={demoUrl} size="small" variant="ghost">
-                <FaArrowUpRightFromSquare aria-hidden="true" />
-                Live demo
-              </Button>
-            ) : null}
-          </div>
-        ) : null}
+        <div className="project-card__actions">
+          <Button href={caseStudyUrl} size="small" variant="primary">
+            Case Study <FaArrowRight aria-hidden="true" />
+          </Button>
+          {githubUrl ? (
+            <Button
+              href={githubUrl}
+              size="small"
+              variant="secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub aria-hidden="true" />
+              GitHub
+            </Button>
+          ) : null}
+          {demoUrl ? (
+            <Button
+              href={demoUrl}
+              size="small"
+              variant="ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaArrowUpRightFromSquare aria-hidden="true" />
+              Demo
+            </Button>
+          ) : null}
+        </div>
       </div>
     </m.article>
   )

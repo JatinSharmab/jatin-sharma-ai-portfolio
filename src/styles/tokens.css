@@ -13,44 +13,46 @@
   --font-sans: "Manrope Variable", Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-  --color-ink-950: #06060b;
-  --color-ink-900: #0b0c14;
-  --color-ink-850: #111221;
-  --color-ink-800: #17182a;
-  --color-mist-50: #f7f8ff;
-  --color-mist-200: #d9dcef;
-  --color-mist-400: #969bb8;
-  --color-violet-electric: #8b5cf6;
-  --color-cyan-electric: #22d3ee;
-  --color-magenta-soft: #d946ef;
+  --color-ink-950: #08090d;
+  --color-ink-900: #0e1017;
+  --color-ink-850: #141722;
+  --color-ink-800: #1a1e2d;
+  --color-mist-50: #f6f7f9;
+  --color-mist-200: #e2e4ea;
+  --color-mist-400: #9ca3af;
+  --color-lime-electric: #d4ff00;
+  --color-lime-soft: #a3e635;
+  --color-violet-restrained: #8b5cf6;
+  --color-violet-muted: #a78bfa;
 
   --radius-card: 1.5rem;
   --radius-control: 0.875rem;
-  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.34);
-  --shadow-glow: 0 0 48px rgb(139 92 246 / 0.18);
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.42);
+  --shadow-glow: 0 0 48px rgb(212 255 0 / 0.16);
 }
 
 :root {
-  --color-bg: #06060b;
-  --color-bg-elevated: #0b0c14;
-  --color-surface: #111221;
-  --color-surface-strong: #17182a;
-  --color-text: #f7f8ff;
-  --color-text-soft: #d9dcef;
-  --color-text-muted: #969bb8;
-  --color-border: rgb(164 171 214 / 0.16);
-  --color-border-strong: rgb(164 171 214 / 0.28);
+  --color-bg: #08090d;
+  --color-bg-elevated: #0e1017;
+  --color-surface: #141722;
+  --color-surface-strong: #1a1e2d;
+  --color-text: #f6f7f9;
+  --color-text-soft: #e2e4ea;
+  --color-text-muted: #9ca3af;
+  --color-border: rgb(156 163 175 / 0.15);
+  --color-border-strong: rgb(156 163 175 / 0.28);
+  --color-lime: #d4ff00;
+  --color-lime-soft: #a3e635;
   --color-violet: #8b5cf6;
-  --color-cyan: #22d3ee;
-  --color-magenta: #d946ef;
+  --color-violet-muted: #a78bfa;
 
-  --gradient-brand: linear-gradient(120deg, #b8a1ff 0%, #8b5cf6 38%, #22d3ee 100%);
-  --gradient-surface: linear-gradient(145deg, rgb(20 21 39 / 0.88), rgb(9 10 18 / 0.72));
-  --gradient-border: linear-gradient(120deg, rgb(139 92 246 / 0.55), rgb(34 211 238 / 0.2));
+  --gradient-brand: linear-gradient(135deg, #d4ff00 0%, #a3e635 42%, #8b5cf6 100%);
+  --gradient-surface: linear-gradient(145deg, rgb(20 23 34 / 0.92), rgb(12 14 20 / 0.78));
+  --gradient-border: linear-gradient(135deg, rgb(212 255 0 / 0.45), rgb(139 92 246 / 0.3));
   --gradient-ambient:
-    radial-gradient(circle at 14% 9%, rgb(139 92 246 / 0.15), transparent 28rem),
-    radial-gradient(circle at 88% 22%, rgb(34 211 238 / 0.09), transparent 24rem),
-    radial-gradient(circle at 52% 82%, rgb(217 70 239 / 0.06), transparent 30rem);
+    radial-gradient(circle at 14% 9%, rgb(212 255 0 / 0.08), transparent 28rem),
+    radial-gradient(circle at 88% 22%, rgb(139 92 246 / 0.12), transparent 26rem),
+    radial-gradient(circle at 52% 82%, rgb(163 230 53 / 0.06), transparent 30rem);
 
   --font-body: "Manrope Variable", Inter, ui-sans-serif, system-ui, sans-serif;
   --font-technical: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -64,7 +66,7 @@
   --space-8: 4rem;
   --space-10: 5rem;
   --space-12: 6rem;
-  --section-space: clamp(5rem, 10vw, 9rem);
+  --section-space: clamp(4.5rem, 9vw, 8rem);
 
   --radius-sm: 0.5rem;
   --radius-md: 0.875rem;
@@ -72,18 +74,19 @@
   --radius-xl: 2rem;
   --radius-pill: 999px;
 
-  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.34);
-  --shadow-lifted: 0 28px 80px rgb(0 0 0 / 0.46);
-  --shadow-focus: 0 0 0 4px rgb(34 211 238 / 0.2);
-  --shadow-violet: 0 0 48px rgb(139 92 246 / 0.18);
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 0.42);
+  --shadow-lifted: 0 28px 80px rgb(0 0 0 / 0.52);
+  --shadow-focus: 0 0 0 4px rgb(212 255 0 / 0.22);
+  --shadow-lime: 0 0 48px rgb(212 255 0 / 0.16);
+  --shadow-violet: 0 0 48px rgb(139 92 246 / 0.16);
 
-  --glass-background: rgb(11 12 20 / 0.72);
-  --glass-border: 1px solid rgb(164 171 214 / 0.16);
+  --glass-background: rgb(14 16 23 / 0.78);
+  --glass-border: 1px solid rgb(156 163 175 / 0.16);
   --glass-blur: 18px;
 
   --container-width: 76rem;
   --container-gutter: clamp(1rem, 4vw, 2rem);
-  --content-width: 46rem;
+  --content-width: 48rem;
 
   --duration-fast: 200ms;
   --duration-base: 360ms;
